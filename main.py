@@ -54,17 +54,35 @@ arithmetic_mean = mean_arithmetic(data)
 harmonic_mean = mean_harmonic(data)
 geometric_mean = mean_geometric(data)
 
-print(f'Середнє арифметичне: {arithmetic_mean}')
-print(f'Середнє гармонійне: {harmonic_mean}')
-print(f'Середнє геометричне: {geometric_mean}')
 
 # Порівняння з точним значенням
-x_true = A * np.sin(n * x + phi)
-abs_error, rel_error = compare_with_true(data, x_true)
-print(f'Максимальна абсолютна похибка: {np.max(abs_error)}')
-print(f'Мінімальна абсолютна похибка: {np.min(abs_error)}')
-print(f'Максимальна відносна похибка: {np.max(rel_error)}')
-print(f'Мінімальна відносна похибка: {np.min(rel_error)}')
+x_true = A * np.sin(n * x + phi) + n
+absolute_errors, relative_errors = [], []
+
+approx_values = [arithmetic_mean, harmonic_mean, geometric_mean]
+for approx_value in approx_values:
+    absolute_error, relative_error = compare_with_true(approx_value, x_true)
+    absolute_errors.append(absolute_error)
+    relative_errors.append(relative_error)
+
+# Виведення результатів
+print("Середнє арифметичне:", arithmetic_mean)
+print("Максимальна абсолютна похибка:", np.nanmax(absolute_errors[0]))
+print("Мінімальна абсолютна похибка:", np.nanmin(absolute_errors[0]))
+print("Максимальна відносна похибка:", np.nanmax(relative_errors[0]))
+print("Мінімальна відносна похибка:", np.nanmin(relative_errors[0]))
+
+print("\nСереднє гармонійне:", harmonic_mean)
+print("Максимальна абсолютна похибка:", np.nanmax(absolute_errors[1]))
+print("Мінімальна абсолютна похибка:", np.nanmin(absolute_errors[1]))
+print("Максимальна відносна похибка:", np.nanmax(relative_errors[1]))
+print("Мінімальна відносна похибка:", np.nanmin(relative_errors[1]))
+
+print("\nСереднє геометричне:", geometric_mean)
+print("Максимальна абсолютна похибка:", np.nanmax(absolute_errors[2]))
+print("Мінімальна абсолютна похибка:", np.nanmin(absolute_errors[2]))
+print("Максимальна відносна похибка:", np.nanmax(relative_errors[2]))
+print("Мінімальна відносна похибка:", np.nanmin(relative_errors[2]))
 
 # Візуалізація результатів
 plot_data(x, data, true_data)
